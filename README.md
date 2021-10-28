@@ -1,1 +1,1 @@
-# Rahim_minicourse_october
+# Rahim-minicourse-october
