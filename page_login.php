@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,17 +37,23 @@
             </a>
         </div>
         <div class="card p-4 border-top-left-radius-0 border-top-right-radius-0">
-            <div class="alert alert-success">
-                Регистрация успешна
-            </div>
-            <form action="">
+            
+            <?php if($_SESSION['success']):?>
+                <? display_flash_message('success'); ?>
+            <? endif ?>
+            
+            <?php if($_SESSION['danger']):?>
+                <? display_flash_message('danger'); ?>
+            <? endif ?>
+            
+            <form action="login.php" method="post">
                 <div class="form-group">
                     <label class="form-label" for="username">Email</label>
-                    <input type="email" id="username" class="form-control" placeholder="Эл. адрес" value="">
+                    <input name="email" type="email" id="username" class="form-control" placeholder="Эл. адрес" value="">
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="password">Пароль</label>
-                    <input type="password" id="password" class="form-control" placeholder="" >
+                    <input name="password" type="password" id="password" class="form-control" placeholder="" >
                 </div>
                 <div class="form-group text-left">
                     <div class="custom-control custom-checkbox">
