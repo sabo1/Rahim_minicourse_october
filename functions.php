@@ -19,17 +19,30 @@ function add_user($email, $password) {
     
     $pdo = new PDO("mysql:host=localhost;dbname=minicourse-october", "root", "");
 
-    $sql = "INSERT INTO register (email, password) VALUES (:email, :password)";
-        
-    // подготавлеваем запрос
-    // $statement = $pdo->prepare($sql);
-    // // выполнениям запрос
-    // $statement->execute([
-    //     "email" => $email, 
-    //     "password" => $password
-    // ]);
-
+    $sql = "INSERT INTO register (email, password) VALUES (:email, :password)";   
+    $statement = $pdo->prepare($sql);
+    $statement->execute(['email' => $email, 'password'=> password_hash($password, PASSWORD_DEFAULT)]);   
+  
 };
+
+function login($email, $password) {
+    $user = get_user_by_email($email);
+    if(empty($users)) {
+        $_SESSION['danger'] = 'Login or password is not correct!';
+        redirect_to('page_register.php');
+        exit;
+    }
+
+    if(!password_verify($password, $users['password'])) {
+        display_flash_message('danger');
+        redirect_to('page_register.php');
+        exit;
+    }
+
+    $_SESSION['user'] = $users;
+
+    return true;
+}
 
 function set_flash_message($name, $message) {
     
@@ -47,3 +60,4 @@ function redirect_to($path) {
     header("Location: {$path}");
     exit;
 };
+
