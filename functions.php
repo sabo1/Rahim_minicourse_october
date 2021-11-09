@@ -1,5 +1,6 @@
 <?php
 
+
 function get_user_by_email( $email ) {
 
     $email = $_POST["email"];
